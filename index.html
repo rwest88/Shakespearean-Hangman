@@ -14,6 +14,74 @@
 
     <script>
     
+    // master plan::::::::
+
+    // game concept: Player plays rounds trying to fill in big chunks of Shakespeare's soliloquies.
+        // (and other meaningful narratives or sonnets) Such large strings cause the gameplay,  
+        // when following the rules of traditional hangman, FAR TOO EASY. So, the gameplay gets a 
+        // makeover.
+
+    // play concept:  You don't get penalized for guessing a wrong letter--you LOSE IMMEDIATELY!
+        //each round, you must solve the puzzle with as few letters guessed as possible.
+        //the more letters you guess, the lower your health drops. To solve, you must type out all 
+        //of the characters.  Health then restores by time bonus * length of puzzle. The game ends when your
+        //health empties or when you incorrectly solve a puzzle. [or, mistakes in puzzle-solving diminish health.]
+
+    // the gameplay:
+
+        // choose difficulty.
+
+//maybe>>   //very easy - very famous lines, no deaths for incorrect letter entries
+//startHere>//easy - famous hamlet, macbeth, romeo and juliet soliloquies, famous sonnets maybe 
+            //medium - othello, king lear, midsummer whatever, yadda yadda
+            //hard - whatever the hell else that guy wrote
+//maybe>>   //expert - no punctuation provided, you must enter it. puzzle-solving is also case-sensitive.
+
+              //other things to factor into difficulty: time-limit, penalty for letter-guesses
+        
+        //The computer/server generates a random selection of poetry, then filters it to show you blanks,
+            // spaces, and punctuation.
+
+        //Guess letters and watch them appear. NO mistakes allowed (don't start with 'x' or 'z'!). All letter
+           // selections (all guesses) are penalized, and lower your health.  Tragic.
+
+        //Watch your number of guesses, and your time.  Time bonuses will offset your 
+          // guess penalties after you've solved.  Guess penalties are exponential (per round)--first 5-10
+          // don't count for much, 15-20 == lethal.
+
+        //You must decide to solve.  There will be a button or keyboard shortcut.  You will have to type out 
+          // all characters (including ones already filled.) The current character on the text field
+          // will be highlighted. Calling this the cursor, this may or may not "sit" on a character and allow multiple
+          // attempts (perhaps depending on difficulty).  The computer checks your answer.  
+
+        //win, and your time bonuses and guess penalties are displayed, and score is adjusted and displayed.
+          // on to the next round; same difficulty level. Score is accumulative. Maybe point revenue adjusts to
+          // length of the solved passage.
+
+        //lose, maybe watch an animation and receive a randomly-generated Shakespearean insult. Log top scores.
+          // a global leaderboard would be cool.
+    
+    // coding considerations
+    
+        ///////Main content arrays should be inside of meta-arrays (or if necessary, objects) 
+          ///////that classify (and eventually show on screen) the literature (and section) of 
+          ///////the source of the generated puzzle.
+
+             /////// What if I could pass arrays to this program, or even packages? Shakespeare, speeches, songs, 
+             /////// web-dev and other technical definitions, the constitution, documents etc. anywho,
+
+        //will need
+
+            // a creative healthbar (maybe animation?) that fits the theme. 
+            // A lot of testing to find sweet spot of penalty/health ratio and increment.
+            // (knowledge of DOM scripting!)
+            // (help with HTML page and graphics)
+            // LOTS OF HELP!!!!!
+            // at least 4 hrs/day
+
+    // current coding progress:
+
+        // declare all necessary arrays and other variables
         // make an array of the strSolution, per character
         // make an array of the user progress, per character
         // first run a loop that changes each user progress index to _ if a letter, or special character
@@ -26,14 +94,6 @@
 
         // array for letters guessed
         // maybe array for wrong letters
-
-
-
-
-
-
-
-
 
     var soliloquySnippets = [
         // Hamlet
@@ -90,7 +150,7 @@
             }
         }
 
-        if (doPrint) {printProgress();}
+        if (doPrint) {printProgress();}  //maybe we can (temporarily) tell the console to clear??
     };
     
 
