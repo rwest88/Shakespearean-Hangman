@@ -7,6 +7,7 @@
     <title>Shakespearean Hangman</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -20,11 +21,13 @@
 
 <h2>Not case-sensitive :)</h2> -->
 <div class="container">
+<h1>Shakespearean Hangman</h1>
+<h2></h2>
 <div class="row">
 <div class="col-md-8">
         <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title" id="solutionSource"></h3>
+                  <h3 class="panel-title" id="solution-source"></h3>
                 </div>
                 <div class="panel-body" id="progress">
                   
@@ -32,7 +35,18 @@
               </div>
 </div>
 </div>
+<h2 id="messages">Hit Enter to solve!</h2>
+<!-- <h4>Letters Guessed:</h4>
+<div class="letters-guessed"></div> -->
+<h4>Time Remaining:</h4>
+<div class="stats" id="timer"></div>
+<h4>Health:</h4>
+<div class="stats" id="health"></div>
+<h4>Score:</h4>
+<div class="stats" id="score"></div>
 </div>
+
+
     <!-- <div class="row">
         <div class="col-md-12">
             <h1>hangmayne</h1>
@@ -136,25 +150,37 @@
         // maybe array for wrong letters
 
     var soliloquySnippets = [
-        // Hamlet    // Act III Scene III
+        // Hamlet    // Act III Scene I
         "To be, or not to be, that is the question: Whether 'tis Nobler in the mind to suffer The Slings and Arrows of outrageous Fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep No more;",
         "And by a sleep, to say we end The Heart-ache, and the thousand Natural shocks That Flesh is heir to? 'Tis a consummation Devoutly to be wished.",
         "To die, to sleep, To sleep, perchance to Dream; aye, there's the rub, For in that sleep of death, what dreams may come, When we have shuffled off this mortal coil, Must give us pause.",
         "There's the respect That makes Calamity of so long life: For who would bear the Whips and Scorns of time, The Oppressor's wrong, the proud man's Contumely, The pangs of disprized Love, the Law’s delay, The insolence of Office, and the Spurns That patient merit of the unworthy takes, When he himself might his Quietus make With a bare Bodkin?",
         "Who would Fardels bear, To grunt and sweat under a weary life, But that the dread of something after death, The undiscovered Country, from whose bourn No Traveller returns, Puzzles the will, And makes us rather bear those ills we have, Than fly to others that we know not of.",
-        "Thus Conscience does mahyjubke Cowards of us all, And thus the Native hue of Resolution Is sicklied o'er, with the pale cast of Thought, And enterprises of great pith and moment, With this regard their Currents turn awry, And lose the name of Action. Soft you now, The fair Ophelia? Nymph, in thy Orisons Be all my sins remembered."];
-
+        "Thus Conscience does mahyjubke Cowards of us all, And thus the Native hue of Resolution Is sicklied o'er, with the pale cast of Thought, And enterprises of great pith and moment, With this regard their Currents turn awry, And lose the name of Action. Soft you now, The fair Ophelia? Nymph, in thy Orisons Be all my sins remembered.",
+        // Hamlet    // Act II Scene II
+        "Now I am alone. O, what a rogue and peasant slave am I! Is it not monstrous that this player here, But in a fiction, in a dream of passion, Could force his soul so to his own conceit That from her working all his visage wann'd, Tears in his eyes, distraction in's aspect, A broken voice, and his whole function suiting With forms to his conceit? and all for nothing!",
+        "For Hecuba! What's Hecuba to him, or he to Hecuba, That he should weep for her? What would he do, Had he the motive and the cue for passion That I have?",
+        "He would drown the stage with tears And cleave the general ear with horrid speech, Make mad the guilty and appal the free, Confound the ignorant, and amaze indeed The very faculties of eyes and ears.",
+        "Yet I, A dull and muddy-mettled rascal, peak, Like John-a-dreams, unpregnant of my cause, And can say nothing; no, not for a king, Upon whose property and most dear life A damn'd defeat was made.",
+        "Am I a coward? Who calls me villain? breaks my pate across? Plucks off my beard, and blows it in my face? Tweaks me by the nose? gives me the lie i' the throat, As deep as to the lungs? who does me this?",
+        "Ha! 'Swounds, I should take it: for it cannot be But I am pigeon-liver'd and lack gall To make oppression bitter, or ere this I should have fatted all the region kites With this slave's offal: bloody, bawdy villain! Remorseless, treacherous, lecherous, kindless villain! O, vengeance!",
+        "Why, what an ass am I! This is most brave, That I, the son of a dear father murder'd, Prompted to my revenge by heaven and hell, Must, like a whore, unpack my heart with words, And fall a-cursing, like a very drab, A scullion!",
+        "Fie upon't! foh! About, my brain! I have heard That guilty creatures sitting at a play Have by the very cunning of the scene Been struck so to the soul that presently They have proclaim'd their malefactions; For murder, though it have no tongue, will speak With most miraculous organ.",
+        "I'll have these players Play something like the murder of my father Before mine uncle: I'll observe his looks; I'll tent him to the quick: if he but blench, I know my course.",
+        "The spirit that I have seen May be the devil: and the devil hath power To assume a pleasing shape; yea, and perhaps Out of my weakness and my melancholy, As he is very potent with such spirits, Abuses me to damn me: I'll have grounds More relative than this: the play 's the thing Wherein I'll catch the conscience of the king."]
+    
+    
     var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
     var strSolution;
     var arrSolution;
     var solutionSource;  //refers to index number of 'var soliloquySnippets' for reference to literary source
+    var solutionActScene;
     var arrProgress;
     var isSolving = false;
     var solveIndex = 0;
     var timer = window.setInterval(second, 1000);  // runs function 'second()' 
     var timeRemaining;
     var numGuesses = 0;
-    var penaltyPadding;  //based on difficulty
     var health;
     var round;
     var score = 0;
@@ -163,7 +189,7 @@
 
     function newGame() {
         score = 0;
-        round = 1;
+        round = 0;
         health = 100;
         var difficulty = 2;  //this can be changed later
         if (difficulty = 2) {penaltyPadding = 10;}  //so can this
@@ -171,7 +197,10 @@
     }
 
     function newRound() {
-        // health += timeRemaining;
+        round += 1;
+        numGuesses = 0;
+        if (round > 1) {health += timeRemaining;}
+        $('#messages').text("Hit enter to solve!");
         isSolving = false;
         solveIndex = 0;
         solutionSource = Math.floor(Math.random() * soliloquySnippets.length);
@@ -186,7 +215,7 @@
                 arrProgress.push(arrSolution[i]);  // push it
             }
         }
-        timeRemaining = Math.round(strSolution.length / 4);  // this can be changed later
+        timeRemaining = Math.round(strSolution.length / 2);  // this can be changed later
         giveSolutionSource();
         printSolutionSource();
         printProgress();
@@ -199,7 +228,6 @@
         if (timeRemaining !== 0) {timeRemaining--;}
         else {health--;}
         if (health > 100) {health = 100;}
-        printHealth();
         printTimeRemaining();
     }
 
@@ -236,7 +264,8 @@
                     inIt = false;
                 }
                 numGuesses++;
-                health = health - numGuesses + penaltyPadding; // 
+                if (numGuesses > 8) {health = health - numGuesses}
+
                 printHealth();
                 printProgress();
             }
@@ -244,17 +273,22 @@
         else if (event.key == "Enter") {
                 if (!isSolving) {
                     isSolving = true;
+                    $('#messages').text("Type the solution before time runs out!")
                     printProgress(); // include script that changes appearance of page for isSolving mode
                 }
                 else {
                     if (arrProgress.join("").toLowerCase() === arrSolution.join("").toLowerCase()) { win(); }
-                    else {lose();}
+                    else {
+                        alert("Incorrect.  Solution is not case-sensitive, but punctuation matters!")
+                        lose();
+                    }
                 }
             }
     };
 
     function win() {
         score += 50 + timeRemaining + ((20 - numGuesses) * 5);
+        $('#score').text(score);
         alert("AWESOME BRO!");
         // while (timeRemaining > 0 && health <= 100) {
         //     setTimeout(function(){printHealth(); printTimeRemaining();}, 1000);
@@ -266,32 +300,49 @@
     }
 
     function lose() {
-        alert("you f***ing lose")
-        alert("any questions")
-        alert("your score is " + score)
-        alert("shakespeare sucks and you're a nerd for even playing this")
-        alert("you're about to play again unless I can figure out script that'll stop running this script. begin!")
-        newGame();
+        timeRemaining = 0
+        health = 0
+        $('#messages').text("You lost.  F5 to play again!")
+        $('#progress').text(strSolution);
+
+        // var again = prompt("Play again?");
+        // if (again) {newGame();}
+        // else {
+        //     health = 0;
+        //     timeRemaining = 0;
+
+        // }
     }
 
     function printHealth() {
         if (health > 100) {health = 100;}
-        if (health < 0) {health = 0;}
+        if (health < 0) {
+            health = 0;
+            alert("you ran out of health. remember, every letter guess lowers your health!")
+            lose();
+        }
         // console.log(health);
+        $('#health').text(health);
     }
 
     function printTimeRemaining() {
         // console.log(timeRemaining);
+        $('#timer').text(timeRemaining);
     }
 
     function giveSolutionSource() {
         if (solutionSource >= 0 && solutionSource <= 5) {
-            solutionSource = "meow"
+            solutionSource = "Hamlet"
+            solutionActScene = "Act III, Scene I"
+        }
+        if (solutionSource >= 6 && solutionSource <= 15) {
+            solutionSource = "Hamlet"
+            solutionActScene = "Act II, Scene II"
         }
     }
 
     function printSolutionSource() {
-
+        $('#solution-source').text(solutionSource + ":  " + solutionActScene);
     }
 
     function printProgress() {
