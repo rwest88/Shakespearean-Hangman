@@ -46,6 +46,9 @@ h1, h2 {
 .panel {
     opacity: 0.8;
     float: left;
+    background-color: darkred;
+    color:white;
+    text-shadow: 1px 1px black;
 }
 
 #solution-source {
