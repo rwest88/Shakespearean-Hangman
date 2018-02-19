@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -8,63 +10,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </head>
+
 <body>
 
-<!-- <h1>Open the console to play!</h1>
+    <div class="container">
 
-<h2>If you input an incorrect letter (or an invalid character), you immediately lose.</h2>
-
-<h2>Be careful not to hit uncommon keys. F5 (refresh), F12 (devtools) and Shift are all fine.</h2>
-
-<h2>Hit Enter to solve, and hit it again to submit.</h2>
-
-<h2>Not case-sensitive :)</h2> -->
-<div class="container">
-<h1>Shakespearean Hangman</h1>
-<h2></h2>
-<div class="row">
-<div class="col-md-8">
-        <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title" id="solution-source"></h3>
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Shakespearean Hangman</h1>
+                <h2 id="messages">Type a letter to guess. Hit Enter to solve. Fix my layout.</h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" id="solution-source"></h3>
+                    </div>
+                    <div class="panel-body" id="progress">
+                        <!-- Printed from function printProgress() -->
+                    </div>
                 </div>
-                <div class="panel-body" id="progress">
-                  
-                </div>
-              </div>
-</div>
-</div>
-<h2 id="messages">Hit Enter to solve!</h2>
-<!-- <h4>Letters Guessed:</h4>
-<div class="letters-guessed"></div> -->
-<h4>Time Remaining:</h4>
-<div class="stats" id="timer"></div>
-<h4>Health:</h4>
-<div class="stats" id="health"></div>
-<h4>Score:</h4>
-<div class="stats" id="score"></div>
-</div>
-
-
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <h1>hangmayne</h1>
+            </div>
         </div>
+
+        <div class="row">
+                <div class="col-md-5">
+                <h3 class="stats" id="guesses">Free Guesses:  10</h3>
+                <h3 class="stats" id="timer">Time:  </h3>
+            </div>
+            <div class="col-md-3 right">
+                <h3 class="stats" id="health">Health:  </h3>
+                <h3 class="stats" id="score">Score:  0</h3>
+            </div>
+        </div>
+
     </div>
-    <div class="row">
-        <div class="col-md-8"> -->
-
-<!-- 
-    <h3 id="solution-source"></h3>
-    <p id="progress"></p> -->
-<!-- <div id="text-field">
-    <h3 id="solution-source"></h3>
-    <p id="progress"></p>
-</div>
-
-<div id="solve-button"></div>
-</div> -->
 
     <script>
     
@@ -149,6 +128,7 @@
         // array for letters guessed
         // maybe array for wrong letters
 
+
     var soliloquySnippets = [
         // Hamlet    // Act III Scene I
         "To be, or not to be, that is the question: Whether 'tis Nobler in the mind to suffer The Slings and Arrows of outrageous Fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep No more;",
@@ -156,7 +136,7 @@
         "To die, to sleep, To sleep, perchance to Dream; aye, there's the rub, For in that sleep of death, what dreams may come, When we have shuffled off this mortal coil, Must give us pause.",
         "There's the respect That makes Calamity of so long life: For who would bear the Whips and Scorns of time, The Oppressor's wrong, the proud man's Contumely, The pangs of disprized Love, the Law’s delay, The insolence of Office, and the Spurns That patient merit of the unworthy takes, When he himself might his Quietus make With a bare Bodkin?",
         "Who would Fardels bear, To grunt and sweat under a weary life, But that the dread of something after death, The undiscovered Country, from whose bourn No Traveller returns, Puzzles the will, And makes us rather bear those ills we have, Than fly to others that we know not of.",
-        "Thus Conscience does mahyjubke Cowards of us all, And thus the Native hue of Resolution Is sicklied o'er, with the pale cast of Thought, And enterprises of great pith and moment, With this regard their Currents turn awry, And lose the name of Action. Soft you now, The fair Ophelia? Nymph, in thy Orisons Be all my sins remembered.",
+        "Thus Conscience does make Cowards of us all, And thus the Native hue of Resolution Is sicklied o'er, with the pale cast of Thought, And enterprises of great pith and moment, With this regard their Currents turn awry, And lose the name of Action. Soft you now, The fair Ophelia? Nymph, in thy Orisons Be all my sins remembered.",
         // Hamlet    // Act II Scene II
         "Now I am alone. O, what a rogue and peasant slave am I! Is it not monstrous that this player here, But in a fiction, in a dream of passion, Could force his soul so to his own conceit That from her working all his visage wann'd, Tears in his eyes, distraction in's aspect, A broken voice, and his whole function suiting With forms to his conceit? and all for nothing!",
         "For Hecuba! What's Hecuba to him, or he to Hecuba, That he should weep for her? What would he do, Had he the motive and the cue for passion That I have?",
@@ -168,7 +148,17 @@
         "Fie upon't! foh! About, my brain! I have heard That guilty creatures sitting at a play Have by the very cunning of the scene Been struck so to the soul that presently They have proclaim'd their malefactions; For murder, though it have no tongue, will speak With most miraculous organ.",
         "I'll have these players Play something like the murder of my father Before mine uncle: I'll observe his looks; I'll tent him to the quick: if he but blench, I know my course.",
         "The spirit that I have seen May be the devil: and the devil hath power To assume a pleasing shape; yea, and perhaps Out of my weakness and my melancholy, As he is very potent with such spirits, Abuses me to damn me: I'll have grounds More relative than this: the play 's the thing Wherein I'll catch the conscience of the king."]
-    
+        
+    function giveSolutionSource() {
+        if (solutionSource >= 0 && solutionSource <= 5) {
+            solutionSource = "Hamlet"
+            solutionActScene = "Act III, Scene I"
+        }
+        if (solutionSource >= 6 && solutionSource <= 15) {
+            solutionSource = "Hamlet"
+            solutionActScene = "Act II, Scene II"
+        }
+    }
     
     var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
     var strSolution;
@@ -191,8 +181,8 @@
         score = 0;
         round = 0;
         health = 100;
-        var difficulty = 2;  //this can be changed later
-        if (difficulty = 2) {penaltyPadding = 10;}  //so can this
+        //var difficulty = 2;  //this can be changed later
+        //if (difficulty = 2) {penaltyPadding = 10;}  //so can this
         newRound();
     }
 
@@ -200,7 +190,7 @@
         round += 1;
         numGuesses = 0;
         if (round > 1) {health += timeRemaining;}
-        $('#messages').text("Hit enter to solve!");
+        $('#messages').text("Type a letter to guess. Hit Enter to solve. Fix my layout.");
         isSolving = false;
         solveIndex = 0;
         solutionSource = Math.floor(Math.random() * soliloquySnippets.length);
@@ -215,19 +205,18 @@
                 arrProgress.push(arrSolution[i]);  // push it
             }
         }
-        timeRemaining = Math.round(strSolution.length / 2);  // this can be changed later
+        timeRemaining = strSolution.length;  // this can be changed later
         giveSolutionSource();
         printSolutionSource();
         printProgress();
         printHealth();
         printTimeRemaining();
-        printSolutionSource();
+        printGuesses();
     }
 
     function second() {  // runs every second
         if (timeRemaining !== 0) {timeRemaining--;}
-        else {health--;}
-        if (health > 100) {health = 100;}
+        else {health--; printHealth();}
         printTimeRemaining();
     }
 
@@ -264,7 +253,9 @@
                     inIt = false;
                 }
                 numGuesses++;
-                if (numGuesses > 8) {health = health - numGuesses}
+                
+                if (numGuesses > 10) {health = health - numGuesses;}
+                else {printGuesses();}
 
                 printHealth();
                 printProgress();
@@ -279,7 +270,7 @@
                 else {
                     if (arrProgress.join("").toLowerCase() === arrSolution.join("").toLowerCase()) { win(); }
                     else {
-                        alert("Incorrect.  Solution is not case-sensitive, but punctuation matters!")
+                        alert("Incorrect.  (Solution is not case-sensitive, but punctuation matters.)")
                         lose();
                     }
                 }
@@ -288,21 +279,22 @@
 
     function win() {
         score += 50 + timeRemaining + ((20 - numGuesses) * 5);
-        $('#score').text(score);
-        alert("AWESOME BRO!");
+        round++;
+        $('#score').text("Score:  " + score);
+        alert("AWESOME BRO! Round " + round + " begins NOW!");
         // while (timeRemaining > 0 && health <= 100) {
         //     setTimeout(function(){printHealth(); printTimeRemaining();}, 1000);
         //     health++; timeRemaining--;
-        // }
-        round++;
-        alert("Score: " + score + ".  Round " + round + " begins NOW!");
+        // }             // can't remember what I was trying to achieve here...
         newRound();
     }
 
     function lose() {
-        timeRemaining = 0
-        health = 0
-        $('#messages').text("You lost.  F5 to play again!")
+        timeRemaining = 0;
+        health = 0;
+        $('#messages')
+            .text("You lost.  F5 to play again!")
+            .addClass('yellow');
         $('#progress').text(strSolution);
 
         // var again = prompt("Play again?");
@@ -313,48 +305,96 @@
 
         // }
     }
+    function printGuesses() { // could package next 3 functions into one: function print(variable, id, maxvalue), but don't wanna.
+        if (10 - numGuesses > 5) {
+            $('#guesses')
+                .removeClass('red')
+                .removeClass('yellow')
+                .addClass('green');
+        }
+        if (10 - numGuesses < 6 && 10 - numGuesses > 2) {
+            $('#guesses')
+                .removeClass('green')
+                .addClass('yellow');
+        }
+        if (10 - numGuesses < 3) {
+            $('#guesses')
+                .removeClass('yellow')
+                .addClass('red');
+        }
+        $('#guesses').text("Free Guesses:  " + (10 - numGuesses));
+    }
 
     function printHealth() {
         if (health > 100) {health = 100;}
-        if (health < 0) {
-            health = 0;
-            alert("you ran out of health. remember, every letter guess lowers your health!")
+        if (health > 50) {
+            $('#health')
+                .removeClass('red')
+                .removeClass('yellow')
+                .addClass('green');
+        }
+        if (health < 51 && health > 24) {
+            $('#health')
+                .removeClass('green')
+                .addClass('yellow');
+        }
+        if (health < 26) {
+            $('#health')
+                .removeClass('yellow')
+                .addClass('red');
+        }
+        if (health <= 0) {
+            $('#health').text("Health:  0");
             lose();
         }
-        // console.log(health);
-        $('#health').text(health);
+        $('#health').text("Health:  " + health);
     }
 
     function printTimeRemaining() {
-        // console.log(timeRemaining);
-        $('#timer').text(timeRemaining);
-    }
-
-    function giveSolutionSource() {
-        if (solutionSource >= 0 && solutionSource <= 5) {
-            solutionSource = "Hamlet"
-            solutionActScene = "Act III, Scene I"
+        if (timeRemaining > arrSolution.length / 2) {
+            $('#timer')
+                .removeClass('red')
+                .removeClass('yellow')
+                .addClass('green');
         }
-        if (solutionSource >= 6 && solutionSource <= 15) {
-            solutionSource = "Hamlet"
-            solutionActScene = "Act II, Scene II"
+        if (timeRemaining < arrSolution.length / 2 && timeRemaining > arrSolution.length / 4) {
+            $('#timer')
+                .removeClass('green')
+                .addClass('yellow');
         }
+        if (timeRemaining < arrSolution.length / 4) {
+            $('#timer')
+                .removeClass('yellow')
+                .addClass('red');
+        }
+        $('#timer').text("Time:  " + timeRemaining);
     }
 
     function printSolutionSource() {
-        $('#solution-source').text(solutionSource + ":  " + solutionActScene);
+        $('#solution-source').text(solutionSource + ":  " + solutionActScene); // will look nicer one day
     }
 
     function printProgress() {
-        // var strProgress = "";
-        var strProgress = arrProgress.join("");  
-        // for (var i in arrProgress) {
-        //     strProgress += arrProgress[i];
-        // }
-        var progressDiv = document.querySelector('#progress');
-        progressDiv.innerHTML = strProgress;
-        
-        // console.log(strProgress);
+        //var strProgress = arrProgress.join("");  
+        //var progressDiv = document.querySelector('#progress');
+        // progressDiv.innerHTML = strProgress;
+        $('#progress').empty();
+        for (var i in arrProgress) {
+            var charProgress = $("<div>")
+            .addClass("char-progress")
+            .text(arrProgress[i])
+            .appendTo($('#progress'))
+            
+            if (isSolving && i == solveIndex) {
+                charProgress.addClass("highlight");
+            }
+
+            if (arrProgress[i] == " ") {
+                charProgress.text("_");
+                charProgress.addClass("space");
+            }
+            // have to figure out word wrapping!!!!!!!!!!!!!!!!
+        }
     }
     
     </script>

@@ -1,6 +1,6 @@
 html, body {
     color: #777777;
-    background-image: url("../images/crystalBall.jpg");
+    background-image: url("shakespeare_wallpaper.png");
     border-color: #dddddd;
     font-size: 18px;
     line-height: 34px;
@@ -29,4 +29,58 @@ h1, h2, h3, p {
     max-width: 960px;
     margin: 0 auto;
     clear: both;    
+}
+
+h1 {
+    color: darkred;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.panel {
+    opacity: 0.8;
+    float: left;
+}
+
+#solution-source {
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+.char-progress {
+    float: left;
+}
+
+.highlight {
+    background: yellowgreen;
+}
+
+.space {
+    width: 10px;
+    visibility: hidden;
+}
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.red {
+    color: red;
 }
